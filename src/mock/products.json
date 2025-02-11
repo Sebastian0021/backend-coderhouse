@@ -1,0 +1,112 @@
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "title": "Laptop Gamer Pro",
+    "description": "Laptop de alto rendimiento para gaming.",
+    "code": "LP123",
+    "price": 1500,
+    "status": true,
+    "stock": 10,
+    "category": "Electrónica",
+    "thumbnails": ["images/laptop1.jpg", "images/laptop2.jpg"]
+  },
+  {
+    "id": "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
+    "title": "Smartphone X",
+    "description": "Último modelo de smartphone con cámara de 108MP.",
+    "code": "SP456",
+    "price": 800,
+    "status": true,
+    "stock": 25,
+    "category": "Electrónica",
+    "thumbnails": ["images/phone1.jpg", "images/phone2.jpg"]
+  },
+  {
+    "id": "e4eaaaf2-d142-11e1-b3e4-080027620cdd",
+    "title": "Tablet Lite",
+    "description": "Tablet ligera y potente para uso diario.",
+    "code": "TB789",
+    "price": 300,
+    "status": true,
+    "stock": 15,
+    "category": "Electrónica",
+    "thumbnails": ["images/tablet1.jpg", "images/tablet2.jpg"]
+  },
+  {
+    "id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+    "title": "Smartwatch Fitness",
+    "description": "Reloj inteligente con monitor de ritmo cardíaco.",
+    "code": "SW321",
+    "price": 200,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": ["images/watch1.jpg", "images/watch2.jpg"]
+  },
+  {
+    "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+    "title": "Auriculares Inalámbricos",
+    "description": "Auriculares con cancelación de ruido.",
+    "code": "AU654",
+    "price": 150,
+    "status": true,
+    "stock": 50,
+    "category": "Electrónica",
+    "thumbnails": ["images/headphones1.jpg", "images/headphones2.jpg"]
+  },
+  {
+    "id": "9c1b1f2e-5c4a-4f3d-8b2a-1f3c4d5e6f7a",
+    "title": "Teclado Mecánico",
+    "description": "Teclado mecánico para gamers y programadores.",
+    "code": "KB987",
+    "price": 120,
+    "status": true,
+    "stock": 20,
+    "category": "Electrónica",
+    "thumbnails": ["images/keyboard1.jpg", "images/keyboard2.jpg"]
+  },
+  {
+    "id": "8f2e9176-8a9b-4f5a-8b1a-3e4f5c6d7e8f",
+    "title": "Monitor 4K",
+    "description": "Monitor de 27 pulgadas con resolución 4K.",
+    "code": "MN432",
+    "price": 400,
+    "status": true,
+    "stock": 12,
+    "category": "Electrónica",
+    "thumbnails": ["images/monitor1.jpg", "images/monitor2.jpg"]
+  },
+  {
+    "id": "2f4a3b2c-1d2e-3f4a-5b6c-7d8e9f0a1b2c",
+    "title": "Impresora Multifunción",
+    "description": "Impresora láser multifunción con Wi-Fi.",
+    "code": "PR765",
+    "price": 250,
+    "status": true,
+    "stock": 8,
+    "category": "Electrónica",
+    "thumbnails": ["images/printer1.jpg", "images/printer2.jpg"]
+  },
+  {
+    "id": "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+    "title": "Cámara DSLR",
+    "description": "Cámara réflex digital para fotografía profesional.",
+    "code": "CM098",
+    "price": 900,
+    "status": true,
+    "stock": 5,
+    "category": "Electrónica",
+    "thumbnails": ["images/camera1.jpg", "images/camera2.jpg"]
+  },
+  {
+    "id": "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
+    "title": "Altavoz Bluetooth",
+    "description": "Altavoz portátil con sonido estéreo.",
+    "code": "SP321",
+    "price": 100,
+    "status": true,
+    "stock": 40,
+    "category": "Electrónica",
+    "thumbnails": ["images/speaker1.jpg", "images/speaker2.jpg"]
+  }
+]
