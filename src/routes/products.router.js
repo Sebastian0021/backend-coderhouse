@@ -1,5 +1,6 @@
 import express from "express";
 import { readFile, writeFile } from "../utils/fs.js";
+import { upload } from "../config/multer.js";
 const router = express.Router();
 
 // La ruta raíz GET / deberá listar todos los productos de la base. (Incluyendo la limitación ?limit del desafío anterior
@@ -42,10 +43,16 @@ router.get("/:pid", async (req, res) => {
 
 // La ruta raíz POST / deberá agregar un nuevo producto
 
-router.post("/", async (req, res) => {
+router.post("/", upload.array("thumbnails"), async (req, res) => {
   try {
-    const { title, description, code, price, stock, category, thumbnails } =
-      req.body;
+    let thumbnails = [];
+    console.log(req.files);
+
+    if (req.files.length > 0) {
+      thumbnails = req.files.map((file) => file.filename);
+    }
+
+    const { title, description, code, price, stock, category } = req.body;
     if (!title || !description || !code || !price || !stock || !category) {
       return res
         .status(400)
@@ -61,7 +68,7 @@ router.post("/", async (req, res) => {
       status: true,
       stock,
       category,
-      thumbnails: thumbnails || [],
+      thumbnails,
     };
     products.push(newProduct);
     await writeFile("src/mock/products.json", products);
@@ -74,19 +81,11 @@ router.post("/", async (req, res) => {
 
 // La ruta PUT /:pid deberá tomar un producto y actualizarlo por los campos enviados desde body. NUNCA se debe actualizar o eliminar el id al momento de hacer dicha actualización.
 
-router.put("/:pid", async (req, res) => {
+router.put("/:pid", upload.array("thumbnails"), async (req, res) => {
   try {
     const { pid } = req.params;
-    const {
-      title,
-      description,
-      code,
-      price,
-      stock,
-      category,
-      thumbnails,
-      status,
-    } = req.body;
+    const { title, description, code, price, stock, category, status } =
+      req.body;
     const products = await readFile("src/mock/products.json");
     const productIndex = products.findIndex((product) => product.id === pid);
     if (productIndex === -1) {
@@ -95,6 +94,10 @@ router.put("/:pid", async (req, res) => {
         .json({ status: "error", message: "Product not found" });
     }
     const product = products[productIndex];
+    let thumbnails = product.thumbnails;
+    if (req.files.length > 0) {
+      thumbnails = req.files.map((file) => file.filename);
+    }
     products[productIndex] = {
       ...product,
       title: title || product.title,
@@ -104,7 +107,7 @@ router.put("/:pid", async (req, res) => {
       status: status !== undefined ? status : product.status,
       stock: stock || product.stock,
       category: category || product.category,
-      thumbnails: thumbnails ? thumbnails : product.thumbnails,
+      thumbnails,
     };
     await writeFile("src/mock/products.json", products);
     res.status(200).json({ status: "success", data: products[productIndex] });

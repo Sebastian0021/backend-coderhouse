@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/static", express.static("public"));
 
 app.listen(PORT, () => console.log("Server up and running on port " + PORT));
-
-crypto.randomUUID();
