@@ -6,33 +6,6 @@ Este es un proyecto backend de Node.js construido con Express y Mongoose.
 
 Este proyecto proporciona una API RESTful para la gestión de productos y carritos.
 
-## Instalación
-
-1.  Clona el repositorio:
-
-    ```bash
-    git clone <url_del_repositorio>
-    ```
-
-2.  Instala las dependencias:
-
-    ```bash
-    npm install
-    ```
-
-3.  Crea un archivo `.env` con las siguientes variables de entorno:
-
-    ```
-    MONGODB_URI=<tu_uri_de_mongodb>
-    PORT=<numero_de_puerto>
-    ```
-
-4.  Inicia el servidor:
-
-    ```bash
-    npm start
-    ```
-
 ## Uso
 
 La API proporciona los siguientes endpoints:
