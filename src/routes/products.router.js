@@ -7,17 +7,51 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const { limit } = req.query;
-    const products = await productsModel.find();
+    const { limit = 10, page = 1, sort, query } = req.query;
 
-    if (limit) {
-      const limitedProducts = products.slice(0, limit);
-      return res.status(200).json({ status: "success", data: limitedProducts });
-    }
+    const options = {
+      page: parseInt(page),
+      limit: parseInt(limit),
+      sort:
+        sort === "asc"
+          ? { price: 1 }
+          : sort === "desc"
+          ? { price: -1 }
+          : undefined,
+    };
 
-    res.status(200).json({ status: "success", data: products });
+    const filter = query
+      ? { $or: [{ category: query }, { availability: query }] }
+      : {};
+
+    const result = await productsModel.paginate(filter, options);
+
+    const { docs, totalPages, prevPage, nextPage, hasPrevPage, hasNextPage } =
+      result;
+
+    const prevLink = hasPrevPage
+      ? `/products?limit=${limit}&page=${prevPage}&sort=${sort}&query=${query}`
+      : null;
+    const nextLink = hasNextPage
+      ? `/products?limit=${limit}&page=${nextPage}&sort=${sort}&query=${query}`
+      : null;
+
+    const response = {
+      status: "success",
+      payload: docs,
+      totalPages,
+      prevPage,
+      nextPage,
+      page: result.page,
+      hasPrevPage,
+      hasNextPage,
+      prevLink,
+      nextLink,
+    };
+
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ status: "error", message: "Internal Server Error" });
   }
 });
