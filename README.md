@@ -1,4 +1,4 @@
-# Proyecto Backend Node.js
+# Proyecto Backend Node.js (Todavía faltan correcciones)
 
 Este es un proyecto backend de Node.js construido con Express y Mongoose.
 
