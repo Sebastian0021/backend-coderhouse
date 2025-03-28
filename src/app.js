@@ -4,7 +4,12 @@ import cartsRouter from "./routes/carts.router.js";
 import handlebars from "express-handlebars";
 import viewsRouter from "./routes/views.router.js";
 import __dirname from "./__dirname.js";
-const PORT = 8080;
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use(express.json());
@@ -20,3 +25,10 @@ app.set("view engine", "handlebars");
 app.use("/", viewsRouter);
 
 app.listen(PORT, () => console.log("Server up and running on port " + PORT));
+
+//mongo
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log(error));

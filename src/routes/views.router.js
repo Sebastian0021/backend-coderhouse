@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { readFile } from "../utils/fs.js";
+import productModel from "../models/product.model.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const products = await readFile("src/mock/products.json");
+  const products = await productModel.find();
 
-  res.render("home", { title: "Home", products });
+  res.render("home", {
+    title: "Home",
+    products: products.map((p) => p.toObject()),
+  });
 });
 
 export default router;
