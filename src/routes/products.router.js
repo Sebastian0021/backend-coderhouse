@@ -80,8 +80,10 @@ router.post("/", upload.array("thumbnails"), async (req, res) => {
   try {
     let thumbnails = [];
 
-    if (req.files.length > 0) {
-      thumbnails = req.files.map((file) => file.filename);
+    if (req.files) {
+      if (req.files.length > 0) {
+        thumbnails = req.files.map((file) => file.filename);
+      }
     }
 
     const { title, description, code, price, stock, category } = req.body;
@@ -113,15 +115,30 @@ router.post("/", upload.array("thumbnails"), async (req, res) => {
 router.put("/:pid", upload.array("thumbnails"), async (req, res) => {
   try {
     const { pid } = req.params;
-    await productsModel.findByIdAndUpdate(pid, req.body);
+    let thumbnails = [];
+    if (req.files) {
+      if (req.files.length > 0) {
+        thumbnails = req.files.map((file) => file.filename);
+      }
+    }
+    const { title, description, code, price, stock, category } = req.body;
+    const update = {
+      title,
+      description,
+      code,
+      price,
+      stock,
+      category,
+      thumbnails,
+    };
+    await productsModel.findByIdAndUpdate(pid, update);
 
-    res.status(200).json({ status: "success", data: products[productIndex] });
+    res.status(200).json({ status: "success", message: "Product updated" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "error", message: "Internal Server Error" });
   }
 });
-
 // La ruta DELETE /:pid deberá eliminar el producto con el id proporcionado.
 
 router.delete("/:pid", async (req, res) => {
