@@ -1,22 +1,48 @@
-// TODAVIA NO FUNCIONA NI EL DELETE NI EL PUT
+// No logro corregir los errores del tipo: ValidatorError: Path `product` is required.
 
 import express from "express";
 import { cartModel } from "../models/carts.model.js";
 
 const router = express.Router();
 
+router.post("/", async (req, res) => {
+  try {
+    const newCart = await cartModel.create({ products: [] });
+    res.status(201).json({ status: "success", data: newCart });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const carts = await cartModel.find();
+    res.status(200).json({ status: "success", data: carts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
+  }
+});
+
 // La ruta GET /:cid deberá listar los productos que pertenezcan al carrito con el parámetro cid proporcionados.
 
 router.get("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const cart = await cartModel.findById(cid).populate("products.product");
+    const cart = await cartModel.findById(cid);
     if (!cart) {
       return res
         .status(404)
         .json({ status: "error", message: "Cart not found" });
     }
-    res.status(200).json({ status: "success", data: cart.products });
+
+    const formattedProducts = cart.products.map((item) => ({
+      quantity: item.quantity,
+      _id: item._id,
+    }));
+
+    res.status(200).json({ status: "success", data: formattedProducts });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: "error", message: "Internal Server Error" });
@@ -36,7 +62,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
     }
 
     cart.products = cart.products.filter(
-      (product) => product.product.toString() !== pid
+      (product) => product._id.toString() !== pid
     );
 
     await cart.save();
@@ -55,15 +81,22 @@ router.put("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
     const products = req.body;
+
     if (!Array.isArray(products)) {
       return res
         .status(400)
         .json({ status: "error", message: "Products must be an array" });
     }
 
+    // Transform the products array to match the expected format
+    const formattedProducts = products.map((product) => ({
+      _id: product._id,
+      quantity: product.quantity,
+    }));
+
     const cart = await cartModel.findByIdAndUpdate(
       cid,
-      { products },
+      { products: formattedProducts },
       { new: true }
     );
 
